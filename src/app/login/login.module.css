@@ -1,0 +1,63 @@
+.containerForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+  padding: 2em;
+  height: 100vh;
+  gap: 2em;
+}
+
+.containerForm h1 {
+  font-size: 60px;
+}
+
+.containerForm form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 30%;
+  border: 1px solid grey;
+  padding: 4em;
+  border-radius: 20px;
+}
+
+.containerForm label {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 10px;
+  font-weight: bold;
+}
+
+.containerForm input {
+  padding: 15px;
+  border-radius: 20px;
+  border: 2px solid blueviolet;
+}
+
+.containerForm input:focus {
+  outline: none;
+  border: 2px solid pink;
+}
+
+.containerForm button {
+  padding: 15px;
+  border: none;
+  border-radius: 30px;
+  background-color: blueviolet;
+  cursor: pointer;
+  margin-top: 1em;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.containerForm button:hover {
+  background-color: white;
+  color: blueviolet;
+  border: 1px solid blueviolet;
+}
