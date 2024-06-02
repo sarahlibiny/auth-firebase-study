@@ -2,15 +2,18 @@
 
 import { FormEvent, useState } from "react";
 import styles from "./register.module.css";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Register() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const { register, loading, error } = useAuth();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(email, password);
+    await register(email, password);
 
     setEmail("");
     setPassword("");
@@ -42,7 +45,8 @@ export default function Register() {
             value={password}
           />
         </label>
-        <button type="submit">Register</button>
+        {error && <p>{error}</p>}
+        {loading ? <p>Loading...</p> : <button type="submit">Register</button>}
       </form>
     </div>
   );
