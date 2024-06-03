@@ -1,6 +1,10 @@
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 import { useState } from "react";
-import { app } from "../firebase/firebase";
+import { auth } from "../firebase/firebase";
 
 export function useAuth() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -9,8 +13,6 @@ export function useAuth() {
   const register = async (email: string, password: string) => {
     setLoading(true);
     setError(null);
-
-    const auth = getAuth(app);
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -31,5 +33,30 @@ export function useAuth() {
       setLoading(false);
     }
   };
-  return { register, loading, error };
+
+  const login = async (email: string, password: string) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      return userCredential.user;
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const logout = async () => {
+    await signOut(auth);
+  };
+
+  return { register, loading, error, login, logout };
 }
