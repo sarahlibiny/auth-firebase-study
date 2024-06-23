@@ -4,10 +4,12 @@ import { FormEvent, useState } from "react";
 import styles from "./login.module.css";
 import { useAuth } from "@/hooks/useAuth";
 import Header from "@/components/header/header";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const router = useRouter();
 
   const { loading, error, login } = useAuth();
 
@@ -15,9 +17,14 @@ export default function Login() {
     e.preventDefault();
 
     await login(email, password);
+    router.push("/dashboard");
 
     setEmail("");
     setPassword("");
+  };
+
+  const handleRedirect = () => {
+    router.push("/resetPassword");
   };
 
   return (
@@ -31,7 +38,7 @@ export default function Login() {
             <input
               type="text"
               placeholder="Email"
-              name="name"
+              name="email"
               required
               onChange={(e) => setEmail(e.target.value)}
               value={email}
@@ -51,6 +58,9 @@ export default function Login() {
           {error && <p>{error}</p>}
           {loading ? <p>Loading...</p> : <button type="submit">Login</button>}
         </form>
+        <button className={styles.buttonReset} onClick={handleRedirect}>
+          Reset Password
+        </button>
       </div>
     </>
   );

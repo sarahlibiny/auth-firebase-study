@@ -1,10 +1,12 @@
 import {
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../firebase/firebase";
+import { toast } from "react-toastify";
 
 export function useAuth() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -44,6 +46,7 @@ export function useAuth() {
         email,
         password
       );
+      console.log(userCredential.user);
       return userCredential.user;
     } catch (error) {
       if (error instanceof Error) {
@@ -58,5 +61,17 @@ export function useAuth() {
     await signOut(auth);
   };
 
-  return { register, loading, error, login, logout };
+  const resetPassword = async (email: string): Promise<void> => {
+    try {
+      //simulacao erro
+      // throw new Error('Erro simulado para teste');
+
+      await sendPasswordResetEmail(auth, email);
+      toast.success("'Password reset email sent successfully!");
+    } catch (error) {
+      toast.error("An error occurred while sending the password reset email.");
+    }
+  };
+
+  return { register, loading, error, login, logout, resetPassword };
 }

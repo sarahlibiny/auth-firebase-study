@@ -4,15 +4,17 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Header() {
-  const router = useRouter();
   const { logout } = useAuth();
+  const router = useRouter();
 
-  const handleLogout = () => {
+  const handleLogOut = () => {
     logout();
     router.push("/");
   };
 
   return (
+    //to do
+    //renderizacao condicional baseado no estado do user
     <>
       <header className={styles.header}>
         <nav>
@@ -24,7 +26,7 @@ export default function Header() {
               <Link href="/login">Login</Link>
             </li>
             <li>
-              <button onClick={handleLogout}>Logout</button>
+              <button onClick={handleLogOut}>Logout</button>
             </li>
           </ul>
         </nav>
